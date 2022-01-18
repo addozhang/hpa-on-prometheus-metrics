@@ -1,0 +1,17 @@
+prometheus:
+  url: http://prometheus-server.default.svc
+  port: 80
+metricsRelistInterval: 10s
+logLevel: 15
+rules:
+  default: false
+  custom:
+   - seriesQuery: '{__name__=~"^http_requests.*_total$",container!="POD",namespace!="",pod!=""}'
+     resources:
+       overrides:
+         namespace: { resource: "namespace" }
+         pod: { resource: "pod" }
+     name:
+       matches: "(.*)_total"
+       as: "${1}_qps"
+     metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[30s])) by (<<.GroupBy>>)

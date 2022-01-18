@@ -1,0 +1,14 @@
+apiVersion: k3d.io/v1alpha3
+kind: Simple
+name: hpa-prometheus
+servers: 1
+agents: 0
+image: docker.io/rancher/k3s:v1.23.1-k3s2
+
+options:
+  k3d:
+    wait: true
+    disableLoadbalancer: false # same as `--no-lb`
+  kubeconfig:
+    updateDefaultKubeconfig: true # add new cluster to your default Kubeconfig; same as `--kubeconfig-update-default` (default: true)
+    switchCurrentContext: true # also set current-context to the new cluster's context; same as `--kubeconfig-switch-context` (default: true)

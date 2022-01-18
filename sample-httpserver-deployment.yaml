@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sample-httpserver
+  name: sample-httpserver
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-httpserver
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "3000"
+      labels:
+        app: sample-httpserver
+    spec:
+      containers:
+        - image: addozhang/httpserver-n-metrics:latest
+          name: httpserver-n-metrics
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: '300Mi'
