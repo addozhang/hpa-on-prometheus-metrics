@@ -2,7 +2,7 @@ prometheus:
   url: http://prometheus-server.default.svc
   port: 80
 metricsRelistInterval: 10s
-logLevel: 15
+logLevel: 4
 rules:
   default: false
   custom:
